@@ -8,3 +8,5 @@ __pycach__
 .orive
 
 *.*~
+
+controler/api_request.py

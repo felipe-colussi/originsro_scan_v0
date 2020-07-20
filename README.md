@@ -1,6 +1,6 @@
-The files inside the root directory are the files used for the 1st project.
-The new version that i'm working one include the files inside other folder:
-Now i'm working on the crud and the controler. 
+This is a test project that i'm using to lear how to develop.
 
-I Know that this isn't the better way to do things nor the better way to store, but
-i'm doing it to learn how to develop and to improve/show my old code. 
+All the files inside the root directory are my old model that i'm not updating anymore. 
+I'm keeping those so i can see/show What i did wrong and what i'm fixing.
+
+The Files that i'm wokring now are the ones inside controler and crud.
