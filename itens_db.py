@@ -17,7 +17,7 @@ with open('itemjson.txt', 'r') as idb:
 
 
 if __name__ == '__main__':
-    idb = requests.get("https://api.originsro.org/api/v1/items/list?api_key=pg398rhdi47l7a8ihzvkvuhndfkqi50o")
+    idb = requests.get("https://api.originsro.org/api/v1/items/list?api_key=*")
     arquivo = idb.json()
     conn = crud.conectar()
     lista_id = crud.return_item_id(conn)

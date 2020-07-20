@@ -89,5 +89,5 @@ async def comands_erro(ctx, error):
     pass
 
 
-client.run('NzI3OTcwMjkyMjgyMTYzMjEx.XvzrWg.fp_dbZ40LGO1gAY-V8oNoZ1_Oeg')
+client.run('*')
 

@@ -10,7 +10,7 @@ def txt(string):
 
 def update_market():
     """Atualiza o database"""
-    idb = requests.get("https://api.originsro.org/api/v1/market/list?api_key=pg398rhdi47l7a8ihzvkvuhndfkqi50o")
+    idb = requests.get("https://api.originsro.org/api/v1/market/list?api_key=*")
     arquivo = idb.json()
     conn = crud.conectar()
     api_request_id = crud.insert_api_request(conn, arquivo["generation_timestamp"])
