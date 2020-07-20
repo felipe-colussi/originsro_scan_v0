@@ -1,0 +1,10 @@
+__pycach__
+
+
+*.pyc
+
+.idea
+
+.orive
+
+*.* ~
