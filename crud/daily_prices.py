@@ -13,7 +13,7 @@ def insert_daily_date(date: str, cursor: object) -> int:
     return x
 
 
-
+@db_updater
 def insert_daily_prices(item_id: int, buying_price: int, buying_ammount: int, vending_price: int,
                         vending_amount: int, date_id: int, cursor: object= None) -> None:
     """
@@ -25,5 +25,6 @@ def insert_daily_prices(item_id: int, buying_price: int, buying_ammount: int, ve
     cursor.execute(f"""INSERT INTO daily_prices (item_id, buying_price, buying_amount, vending_price, vending_amount, 
     scan_date_id) VALUES ({item_id}, {buying_price}, {buying_ammount}, {vending_price}, {vending_amount}, {date_id})""")
     return None
+
 
 

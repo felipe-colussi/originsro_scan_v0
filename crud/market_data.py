@@ -1,7 +1,7 @@
 from crud.connection import db_updater, db_reader
 from math import inf
 from typing import List, Tuple
-
+import datetime
 
 @db_updater
 def insert_api_datetime(date_time: str, cursor: object) -> int:
@@ -55,10 +55,10 @@ def daily_reset(cursor: object) -> None:
 
 
 @db_reader
-def date(cursor: object) -> str:
+def date(cursor: object = None) -> str:
     cursor.execute("""SELECT date_time::DATE FROM api_datetime group by date_time""")
     x = cursor.fetchone()[0]
     return x
 
-print(date())
-print(type(str(date())))
+
+

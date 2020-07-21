@@ -1,13 +1,19 @@
-from crud import (conectar, desconectar, return_item_id, insert_discord_request, return_discord_request,
-                  delete_discord_list, delete_discord_item)
-from discord.ext import commands
+from crud.item_db import item_db_id_list
+from crud.discord import insert_discord_request, return_discord_wishlist, delete_discord_list, delete_discord_item
+from discord.ext import commands, tasks
+from request_keys import discord_key
+from controler.checker import checker
+import asyncio
 
-conn = conectar()
-id_list = return_item_id(conn)
-desconectar(conn)
+id_list = item_db_id_list()
 
-# client = discord.Client()
+
 client = commands.Bot(command_prefix='!')
+
+
+@tasks.loop(seconds=6000)
+async def my_loop():
+    await checker()
 
 
 @client.event
@@ -15,11 +21,17 @@ async def on_ready():
     print("BOT Online.")
 
 
+async def reply(item_id: int, item_name: str, price: int, stores: str, discord_user: int):
+    user = await client.get_user_info(str(discord_user))
+    await client.send_message(user, f"Item: {item_id} - {item_name} is selling for: {price}\n {stores}")
+
+
 @client.command()
 async def buy(ctx, item_id: int, *, price: int):
     if item_id in id_list:
         insert_discord_request(item_id, price, ctx.message.author.id)
         await ctx.author.send(F" Added: item: {item_id}, price limit: {price}")
+
     else:
         await ctx.send(F" The item_id isn't valid.")
 
@@ -27,12 +39,12 @@ async def buy(ctx, item_id: int, *, price: int):
 @buy.error
 async def buy_error(ctx, error):
     if isinstance(error, commands.BadArgument):
-        await ctx.send('This comand needs 2 numerical parameters: item_id and price.  Use just numbers: Ex: 509 800.')
+        await ctx.send('This comand needs 2 numerical parameters: item_id price.  Use just numbers: Ex: 509 800.')
 
 
 @client.command()
 async def list(ctx):
-    player_list = return_discord_request(ctx.message.author.id)
+    player_list = return_discord_wishlist(ctx.message.author.id)
     if len(player_list) == 0:
         await ctx.author.send("List is empty")
     else:
@@ -59,16 +71,14 @@ async def clear_erro(ctx, error):
 
 @client.command()
 async def delete(ctx, *args):
-    conn = conectar()
     discord_id = ctx.message.author.id
     for item in args:
         try:
             item = int(item)
-            delete_discord_item(conn, discord_id, item)
+            delete_discord_item(discord_id, item)
             await ctx.author.send(f" Item: {item} deleted.")
         except ValueError:
             pass
-    desconectar(conn)
 
 
 @delete.erro
@@ -88,5 +98,5 @@ async def comands_erro(ctx, error):
     pass
 
 
-client.run('NzI3OTcwMjkyMjgyMTYzMjEx.XvzrWg.fp_dbZ40LGO1gAY-V8oNoZ1_Oeg')
+client.run(discord_key)
 

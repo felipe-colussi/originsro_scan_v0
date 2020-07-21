@@ -1,8 +1,9 @@
-from .connection import db_updater, db_reader
+from crud.connection import db_updater, db_reader
+from typing import List, Tuple
 
 
 @db_updater
-def insert_discord_request(item_id: int, price: int, discord_user: int, cursor: object) -> None:
+def insert_discord_request(item_id: int, price: int, discord_user: int, cursor: object= None) -> None:
     """
     Insert a item in the discord database
     :param item_id:  item_id
@@ -17,9 +18,9 @@ def insert_discord_request(item_id: int, price: int, discord_user: int, cursor: 
 
 
 @db_reader
-def return_discord_request(discord_id: int, cursor: object) -> list:
+def return_discord_wishlist(discord_id: int, cursor: object) -> list:
     """ Return a list of the wishlist
-    :param cursor got from decorator:
+    :param cursor: cursor from @db_reader decorator
     :param discord_id: discord ID (ctx.message.author.id)
     :return: item_id, nome, preço
     """
@@ -43,13 +44,28 @@ def delete_discord_list(discord_id: int, cursor: object) -> None:
 
 
 @db_updater
-def delete_discord_item(discord_id, item_id, cursor):
+def delete_discord_item(discord_id: int, item_id: int, cursor: object) -> None:
     """
     Delet a item from discord_request
     :param cursor: got from the decorator
     :param item_id: item_id to be deleted
     :param discord_id: discord ID (ctx.message.author.id)
     :return: None
+    ** Verificar se é melhor fazer assim ou solicitar o valor também:
+    - Assim é melhor para o usuario deletar.
+    - Selecionando o valor é melhor para o usuario poder fazer 2 requests com valores diferentes.
     """
     cursor.execute(f"""DELETE FROM discord_request WHERE discord_user = {discord_id} and item_id = {item_id}""")
     return
+
+
+@db_reader
+def return_discord_list(cursor: object= None) -> List[Tuple[int, int, int]]:
+    """
+    :param cursor: obtained from decorator @db_reader
+    :return: list of tuples containing: item_id, item_target_price, discord_id
+    """
+    cursor.execute(F"""select item_id, price, discord_user from discord_request""")
+    return cursor.fetchall()
+
+

@@ -1,5 +1,5 @@
 from dateutil.parser import isoparse as iso
-
+from datetime import datetime
 
 def timestamp(api_request: dict) -> object:
     """Return a Datetime Object"""
@@ -9,6 +9,15 @@ def timestamp(api_request: dict) -> object:
 def str_timestamp(api_request: dict) -> str:
     """Return a Data-teime string"""
     return timestamp(api_request).strftime("%Y-%m-%d-%H-%M")
+
+
+def str_to_date(data_time_str: str) -> object:
+    """
+    get a string from str_timestamp and convert it to a data
+    :param data_time_str:
+    :return: datatime
+    """
+    return datetime.strptime('2020-06-06-08-30', '%Y-%m-%d-%H-%M').date()
 
 
 def str_data(api_request: dict) -> str:

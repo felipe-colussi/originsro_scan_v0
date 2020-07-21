@@ -21,7 +21,7 @@ def disconnect(conn):
         conn.close()
 
 
-def db_updater(function):
+def db_updater(function, *args, **kwargs):
     """Decorator to open and close connections before execute a update/insert functions"""
     def wrapper(*args, **kwargs):
         conn = connect()
@@ -33,7 +33,7 @@ def db_updater(function):
     return wrapper
 
 
-def db_reader(function):
+def db_reader(function, *args, **kwargs):
     def wrapper(*args, **kwargs):
         conn = connect()
         conn.set_session(readonly=True, autocommit=True)

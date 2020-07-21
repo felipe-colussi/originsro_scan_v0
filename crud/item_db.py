@@ -3,7 +3,7 @@ from controler.api_request import item_api_request
 from typing import List, Tuple
 
 
-def insert_item_db(item_id: int, name: str, i_type: str, npc_price: int, cursor: object=None) -> None:
+def insert_item_db(item_id: int, name: str, i_type: str, npc_price: int, cursor: object= None) -> None:
     """
     Insere itens na tabela Itens
     :param cursor:

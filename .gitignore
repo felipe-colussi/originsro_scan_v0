@@ -1,5 +1,6 @@
 __pycach__
 
+request_keys.py
 
 *.pyc
 
@@ -9,4 +10,4 @@ __pycach__
 
 *.*~
 
-controler/api_request.py
+

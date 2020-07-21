@@ -49,6 +49,11 @@ class Item:
         self.buying_store = []
         self.storage = False
 
+    def vending_store_str(self) -> str:
+        string = ''
+        for store in self.vending_store:
+            string += f'@navishop {store[0]} at {store[1]}\n'
+
 
 # VER SE É VALIDO FAZER UM PICKLE PARA ARMAZENAR OS VALORES ZERADOS.
 def create_item_dict() -> Dict[int, object]:
@@ -58,6 +63,7 @@ def create_item_dict() -> Dict[int, object]:
 
 def update_item_dict(item_dict: dict) -> str:
     """Update the item_dict for each item in the market."""
-    file = market_api_request()
-    stores(file, item_dict)
+    file = market_api_request() # Retorna a API
+    stores(file, item_dict) # Atualiza o item_dict
     return str_timestamp(file)
+
